@@ -1,0 +1,12 @@
+server {
+    listen       80;
+    server_name  ${NGINX_HOST};
+
+    error_log  /var/log/nginx/${NGINX_HOST}.error.log;
+    access_log /var/log/nginx/${NGINX_HOST}.access.log;
+
+    root   /srv/app/public;
+    index  index.php;
+
+    include /etc/nginx/vhost.common.d/*.conf;
+}
