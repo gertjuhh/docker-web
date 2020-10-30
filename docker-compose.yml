@@ -5,11 +5,15 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD-root}
+      MYSQL_USER: ${MYSQL_USER-foo}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD-bar}
+      MYSQL_DATABASE: ${MYSQL_DATABASE-baz}
     image: mysql:${MYSQL_VERSION-8.0.22}
     ports:
       - 3306:3306
     volumes:
       - './docker/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro'
+      - 'mysql:/var/lib/mysql'
 
   php:
     build:
@@ -38,3 +42,6 @@ services:
       - '.:/srv/app'
       - './docker/nginx/vhost.common.d:/etc/nginx/vhost.common.d'
       - './docker/nginx/templates:/etc/nginx/templates'
+
+volumes:
+  mysql:
