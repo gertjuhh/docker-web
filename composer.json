@@ -8,6 +8,14 @@
     }
   ],
   "require": {
+    "ext-gd": "*",
+    "ext-intl": "*",
+    "ext-pdo": "*",
+    "ext-pdo_mysql": "*",
+    "ext-zip": "*"
+  },
+  "require-dev": {
+    "ext-xdebug": "*"
   },
   "config": {
     "platform": {
