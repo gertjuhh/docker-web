@@ -28,7 +28,7 @@ services:
     ports:
       - 9000
     volumes:
-      - '.:/srv/app'
+      - './sulu:/srv/app'
       - '${COMPOSER_CACHE_DIR-~/.cache/composer}:/composer/cache'
     user: ${UID-1000}:${GID-1000}
 
@@ -43,7 +43,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - '.:/srv/app'
+      - './sulu:/srv/app'
       - './docker/nginx/vhost.common.d:/etc/nginx/vhost.common.d'
       - './docker/nginx/templates:/etc/nginx/templates'
 
