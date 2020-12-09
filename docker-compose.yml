@@ -22,6 +22,9 @@ services:
         PHP_VERSION: ${PHP_VERSION-7.4.10}
     environment:
       COMPOSER_CACHE_DIR: '/composer/cache'
+    depends_on:
+      - mailhog
+      - mysql
     ports:
       - 9000
     volumes:
@@ -33,7 +36,7 @@ services:
     environment:
       NGINX_HOST: ${NGINX_HOST-localhost}
     depends_on:
-      - 'php'
+      - php
     image: nginx:${NGINX_VERSION-1.19.3}
     ports:
       - 80:80
@@ -42,6 +45,12 @@ services:
       - '.:/srv/app'
       - './docker/nginx/vhost.common.d:/etc/nginx/vhost.common.d'
       - './docker/nginx/templates:/etc/nginx/templates'
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - 1025:1025
+      - 8025:8025
 
 volumes:
   mysql:

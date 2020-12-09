@@ -1,5 +1,5 @@
 # docker-web
-Local development stack containing PHP, MySQL and NGINX
+Local development stack containing PHP, MySQL, NGINX and MailHog
 
 ## Running
 `docker-compose up -d`
@@ -21,3 +21,8 @@ Some changes, like a version downgrade, require the storage to be reset.
 ## php.ini changes
 Changes to the `php.ini` file require the PHP container to be rebuilt.  
 `docker-compose up -d --build php`
+
+## Email
+MailHog contains an SMTP server which captures all outgoing mail.  
+SMTP: `mailhog:1025`  
+UI: `localhost:8025`
