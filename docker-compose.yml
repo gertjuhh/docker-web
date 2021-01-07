@@ -19,7 +19,7 @@ services:
     build:
       context: docker/php
       args:
-        PHP_VERSION: ${PHP_VERSION-7.4.10}
+        PHP_VERSION: ${PHP_VERSION-7.4.14}
     environment:
       COMPOSER_CACHE_DIR: '/composer/cache'
     depends_on:
@@ -35,9 +35,10 @@ services:
   web:
     environment:
       NGINX_HOST: ${NGINX_HOST-localhost}
+      NGINX_ALIASES: ${NGINX_ALIASES-}
     depends_on:
       - php
-    image: nginx:${NGINX_VERSION-1.19.3}
+    image: nginx:${NGINX_VERSION-1.19.6}
     ports:
       - 80:80
       - 443:443

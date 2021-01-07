@@ -1,6 +1,11 @@
+# 404 for all but configured host(s)
+server {
+    return 404;
+}
+
 server {
     listen       80;
-    server_name  ${NGINX_HOST};
+    server_name  ${NGINX_HOST} ${NGINX_ALIASES};
 
     error_log  /var/log/nginx/${NGINX_HOST}.error.log;
     access_log /var/log/nginx/${NGINX_HOST}.access.log;
