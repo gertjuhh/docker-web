@@ -35,6 +35,13 @@ MailHog contains an SMTP server which captures all outgoing mail.
 SMTP: `mailhog:1025`  
 UI: `localhost:8025`
 
+## Initial setup
+```
+echo "APP_ENV=dev" > sulu/.env.local
+docker-compose exec php composer install
+docker-compose exec php bin/adminconsole sulu:build dev
+```
+
 ## Composer
 ```
 docker-compose exec php composer <command>
