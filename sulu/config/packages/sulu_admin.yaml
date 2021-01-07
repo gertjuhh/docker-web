@@ -1,3 +1,11 @@
+sulu_core:
+    locales:
+        en: English
+        nl: Nederlands
+    translations:
+        - en
+        - nl
+
 sulu_admin:
     email: "%env(SULU_ADMIN_EMAIL)%"
     forms:
