@@ -48,6 +48,7 @@
         "phpcr/phpcr-shell": "^1.2",
         "symfony/debug-bundle": "^5.1",
         "symfony/error-handler": "^5.1",
+        "symfony/maker-bundle": "^1.27",
         "symfony/phpunit-bridge": "^5.1",
         "symfony/thanks": "^1.1",
         "symfony/web-profiler-bundle": "^5.1"
