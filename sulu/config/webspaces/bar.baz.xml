@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<webspace xmlns="http://schemas.sulu.io/webspace/webspace"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://schemas.sulu.io/webspace/webspace http://schemas.sulu.io/webspace/webspace-1.1.xsd">
+    <!-- See: http://docs.sulu.io/en/latest/book/webspaces.html how to configure your webspace-->
+
+    <name>bar.baz</name>
+    <key>bar_baz</key>
+
+    <localizations>
+        <!-- See: http://docs.sulu.io/en/latest/book/localization.html how to add new localizations -->
+        <localization language="en" country="uk" default="true"/>
+    </localizations>
+
+    <default-templates>
+        <default-template type="page">default</default-template>
+        <default-template type="home">homepage</default-template>
+    </default-templates>
+
+    <templates>
+        <template type="search">search/search</template>
+        <!-- See: http://docs.sulu.io/en/latest/cookbook/custom-error-page.html how to create a custom error page -->
+        <template type="error">error/error</template>
+    </templates>
+
+    <navigation>
+        <contexts>
+            <context key="main">
+                <meta>
+                    <title lang="en">Main Navigation</title>
+                </meta>
+            </context>
+        </contexts>
+    </navigation>
+
+    <security permission-check="true">
+        <system>bar.baz</system>
+    </security>
+
+    <portals>
+        <portal>
+            <name>bar.baz</name>
+            <key>bar_baz</key>
+
+            <environments>
+                <environment type="dev">
+                    <urls>
+                        <url language="en" country="uk">bar.baz</url>
+                    </urls>
+                </environment>
+            </environments>
+        </portal>
+    </portals>
+</webspace>
