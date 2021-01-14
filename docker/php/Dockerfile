@@ -1,5 +1,5 @@
-ARG COMPOSER_VERSION=1.10
-ARG PHP_VERSION=7.4.10
+ARG COMPOSER_VERSION=2.0
+ARG PHP_VERSION=7.4.14
 
 FROM composer:${COMPOSER_VERSION} AS composer
 
@@ -32,7 +32,7 @@ RUN apt-get update && apt-get upgrade -y \
         opcache \
         pdo_mysql \
         zip \
-    && pecl install xdebug 2.9.8 \
+    && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && docker-php-source delete \
     && mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
