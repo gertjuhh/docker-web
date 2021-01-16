@@ -21,6 +21,7 @@ services:
       args:
         COMPOSER_VERSION: ${COMPOSER_VERSION-2.0}
         PHP_VERSION: ${PHP_VERSION-7.4.14}
+        DEBUG: ${DEBUG-0}
     environment:
       COMPOSER_CACHE_DIR: '/composer/cache'
     depends_on:
