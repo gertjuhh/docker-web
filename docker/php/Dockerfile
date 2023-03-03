@@ -1,8 +1,8 @@
-ARG COMPOSER_VERSION=2.0
-ARG PHP_VERSION=7.4.14
+ARG COMPOSER_VERSION
+ARG PHP_VERSION
 
 FROM composer:${COMPOSER_VERSION} AS composer
-FROM php:${PHP_VERSION}-fpm
+FROM php:${PHP_VERSION}-fpm-alpine
 
 ARG DEBUG=0
 
@@ -13,20 +13,30 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 # Copy custom PHP ini settings
 COPY php.ini ${PHP_INI_DIR}/conf.d/90-php.ini
 
-RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y \
-        # ext-gd
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-        # ext-intl
-        libicu-dev \
-        # ext-zip
-        libzip-dev \
-        # misc
-        unzip \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+RUN \
+    ###
+    # Build dependencies
+    ###
+    apk add --no-cache --virtual .build-deps  \
+    # phpize
+    linux-headers ${PHPIZE_DEPS} \
+    # ext-imagick
+    imagemagick-dev imagemagick libtool \
+    # ext-soap
+    libxml2-dev \
+    # ext-tidy
+    tidyhtml-dev tidyhtml \
+    ###
+    # Runtime dependencies
+    ###
+    && apk add --no-cache \
+    # ext-gd
+    freetype-dev libjpeg-turbo-dev libpng-dev zlib-dev libwebp-dev \
+    # ext-intl \
+    icu-dev \
+    # ext-zip
+    libzip-dev zip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-configure intl \
     && docker-php-ext-install -j$(nproc) \
         gd \
@@ -43,7 +53,9 @@ RUN apt-get update \
         && docker-php-ext-enable xdebug \
         ; \
     fi \
-    && docker-php-source delete
+    # Remove build dependencies
+    && docker-php-source delete \
+    && apk del --no-network .build-deps
 
 # Expose volumes
 VOLUME ["/srv/app"]

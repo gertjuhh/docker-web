@@ -8,9 +8,9 @@ services:
       MYSQL_USER: ${MYSQL_USER-foo}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD-bar}
       MYSQL_DATABASE: ${MYSQL_DATABASE-baz}
-    image: mysql:${MYSQL_VERSION-8.0.22}
+    image: mysql:${MYSQL_VERSION-8.0.32}
     ports:
-      - 3306:3306
+      - '3306:3306'
     volumes:
       - './docker/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro'
       - 'mysql:/var/lib/mysql'
@@ -19,16 +19,16 @@ services:
     build:
       context: docker/php
       args:
-        COMPOSER_VERSION: ${COMPOSER_VERSION-2.0}
-        PHP_VERSION: ${PHP_VERSION-7.4.14}
-        DEBUG: ${DEBUG-0}
+        COMPOSER_VERSION: ${COMPOSER_VERSION-2.5}
+        PHP_VERSION: ${PHP_VERSION-8.2.3}
+        DEBUG: ${DEBUG-1}
     environment:
       COMPOSER_CACHE_DIR: '/composer/cache'
     depends_on:
       - mailhog
       - mysql
     ports:
-      - 9000
+      - '9000'
     volumes:
       - '.:/srv/app'
       - '${COMPOSER_CACHE_DIR-~/.cache/composer}:/composer/cache'
@@ -40,10 +40,10 @@ services:
       NGINX_ALIASES: ${NGINX_ALIASES-}
     depends_on:
       - php
-    image: nginx:${NGINX_VERSION-1.19.6}
+    image: nginx:${NGINX_VERSION-1.23.3}-alpine
     ports:
-      - 80:80
-      - 443:443
+      - '80:80'
+      - '443:443'
     volumes:
       - '.:/srv/app'
       - './docker/nginx/vhost.common.d:/etc/nginx/vhost.common.d'
@@ -52,8 +52,8 @@ services:
   mailhog:
     image: mailhog/mailhog:latest
     ports:
-      - 1025:1025
-      - 8025:8025
+      - '1025:1025'
+      - '8025:8025'
 
 volumes:
   mysql:
