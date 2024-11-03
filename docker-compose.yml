@@ -1,32 +1,31 @@
 version: '3'
 
 services:
-  mysql:
-    command: --default-authentication-plugin=mysql_native_password
+  mariadb:
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD-root}
-      MYSQL_USER: ${MYSQL_USER-foo}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD-bar}
-      MYSQL_DATABASE: ${MYSQL_DATABASE-baz}
-    image: mysql:${MYSQL_VERSION-8.0.32}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD-root}
+      MARIADB_USER: ${MARIADB_USER-foo}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD-bar}
+      MARIADB_DATABASE: ${MARIADB_DATABASE-baz}
+    image: mariadb:${MARIADB_VERSION-11.5.2}
     ports:
       - '3306:3306'
     volumes:
-      - './docker/mysql/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro'
-      - 'mysql:/var/lib/mysql'
+      - './docker/mariadb/mysql.cnf:/etc/mysql/conf.d/mysql.cnf:ro'
+      - 'mariadb:/var/lib/mysql'
 
   php:
     build:
       context: docker/php
       args:
-        COMPOSER_VERSION: ${COMPOSER_VERSION-2.5}
-        PHP_VERSION: ${PHP_VERSION-8.2.3}
+        COMPOSER_VERSION: ${COMPOSER_VERSION-2.8}
+        PHP_VERSION: ${PHP_VERSION-8.3.13}
         DEBUG: ${DEBUG-1}
     environment:
       COMPOSER_CACHE_DIR: '/composer/cache'
     depends_on:
       - mailhog
-      - mysql
+      - mariadb
     ports:
       - '9000'
     volumes:
@@ -40,7 +39,7 @@ services:
       NGINX_ALIASES: ${NGINX_ALIASES-}
     depends_on:
       - php
-    image: nginx:${NGINX_VERSION-1.23.3}-alpine
+    image: nginx:${NGINX_VERSION-1.27.2}-alpine
     ports:
       - '80:80'
       - '443:443'
@@ -56,4 +55,4 @@ services:
       - '8025:8025'
 
 volumes:
-  mysql:
+  mariadb:
